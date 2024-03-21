@@ -1,5 +1,8 @@
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
+
+import org.w3c.dom.events.MouseEvent;
+
 import java.awt.*;
 
 public class ModuleComponent extends JPanel {
@@ -14,11 +17,17 @@ public class ModuleComponent extends JPanel {
         contentBox.setBackground(Color.WHITE);
         contentBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2)); // Small gray border
         contentBox.setPreferredSize(new Dimension(280, 90));
+        
+        JLabel contentLabel = new JLabel("Task");
+        contentLabel.setForeground(Color.BLACK);
+        contentLabel.setHorizontalAlignment(JLabel.CENTER);
+        contentBox.setLayout(new BorderLayout());
+        contentBox.add(contentLabel);
 
         // Create the button box
         JPanel buttonBox = new JPanel();
         buttonBox.setLayout(new GridLayout(1, 2, 8, 0)); // 1 row, 2 columns, horizontal gap of 10 pixels
-        buttonBox.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10)); // Add padding to the button box
+        buttonBox.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); // Add padding to the button box
 
         // Create the buttons
         JButton greenButton = new JButton();
@@ -28,7 +37,13 @@ public class ModuleComponent extends JPanel {
         greenButton.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2, true)); // Add a dark gray rounded border
         greenButton.setUI(new RoundedButtonUI(10)); // Set the corner radius to 10 pixels
         greenButton.setPreferredSize(new Dimension(150, 40));
-    
+        
+        //Creates text within Green box
+        JLabel greenLabel = new JLabel("Complete");
+        greenLabel.setForeground(Color.BLACK);
+        greenLabel.setHorizontalAlignment(JLabel.CENTER);
+        greenButton.setLayout(new BorderLayout());
+        greenButton.add(greenLabel);
 
         JButton redButton = new JButton();
         redButton.setBackground(Color.RED);
@@ -38,6 +53,14 @@ public class ModuleComponent extends JPanel {
         redButton.setUI(new RoundedButtonUI(10)); // Set the corner radius to 10 pixels
         redButton.setPreferredSize(new Dimension(140, 50));
 
+        //Create Incomplete text within box
+        JLabel redLabel = new JLabel("Incomplete");
+        redLabel.setForeground(Color.BLACK);
+        redLabel.setHorizontalAlignment(JLabel.CENTER);
+        redButton.setLayout(new BorderLayout());
+        redButton.add(redLabel);
+
+        //Adds both buttons
         buttonBox.add(greenButton);
         buttonBox.add(redButton);
 
