@@ -1,8 +1,7 @@
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
-
-import org.w3c.dom.events.MouseEvent;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.*;
 
 public class ModuleComponent extends JPanel {
@@ -24,6 +23,15 @@ public class ModuleComponent extends JPanel {
         contentBox.setLayout(new BorderLayout());
         contentBox.add(contentLabel);
 
+        contentBox.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                String task = JOptionPane.showInputDialog(null, "Enter your task:", "Add Task", JOptionPane.PLAIN_MESSAGE);
+                if (task != null && !task.isEmpty()) {
+                    contentLabel.setText(task); // Update the label with the user's task
+                }
+            }
+        });
+        
         // Create the button box
         JPanel buttonBox = new JPanel();
         buttonBox.setLayout(new GridLayout(1, 2, 8, 0)); // 1 row, 2 columns, horizontal gap of 10 pixels
@@ -45,6 +53,11 @@ public class ModuleComponent extends JPanel {
         greenButton.setLayout(new BorderLayout());
         greenButton.add(greenLabel);
 
+        greenButton.addActionListener(e -> {
+            // Set the visibility of the entire ModuleComponent to false
+            this.setVisible(false);
+        });
+
         JButton redButton = new JButton();
         redButton.setBackground(Color.RED);
         redButton.setOpaque(true); // Make the button opaque to show the background color
@@ -59,6 +72,11 @@ public class ModuleComponent extends JPanel {
         redLabel.setHorizontalAlignment(JLabel.CENTER);
         redButton.setLayout(new BorderLayout());
         redButton.add(redLabel);
+
+        redButton.addActionListener(e -> {
+            // Set the visibility of the entire ModuleComponent to false
+            this.setVisible(false);
+        });
 
         //Adds both buttons
         buttonBox.add(greenButton);
