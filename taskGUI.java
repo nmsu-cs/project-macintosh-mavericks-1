@@ -25,7 +25,7 @@ public class taskGUI {
         frame.setLayout(null);
         frame.setVisible(true);
 
-        addButtonWithListener(frame, "test");
+        addButtonWithListener(frame, "Add task");
     }
 
     //TODO: add function for button listeners
@@ -40,6 +40,7 @@ public class taskGUI {
     private static void testButtonPressed(JFrame frame) {
         String taskInput = JOptionPane.showInputDialog("Enter task...");
 
+        //FIXME: The task is never being displayed.
         JLabel task = new JLabel(taskInput);
         frame.add(task);
         task.setVisible(true);
