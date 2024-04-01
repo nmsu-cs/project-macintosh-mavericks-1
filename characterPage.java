@@ -54,7 +54,7 @@ public class characterPage {
         window.add(characterPanel);
 
         //get image as an image in javaFX
-        ImageIcon pixelGuy = new ImageIcon(getClass().getClassLoader().getResource("test2.png"));
+        ImageIcon pixelGuy = new ImageIcon(getClass().getClassLoader().getResource("res/defaultCharacter.png"));
 
         //creates character button
         JButton pixelButton = new JButton();
