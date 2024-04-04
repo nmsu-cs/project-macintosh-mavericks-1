@@ -1,62 +1,49 @@
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.border.Border;
 
+import java.awt.*;
 
 public class TaskQuest extends JPanel {
 
+    //!Might need to make use of another function for this.
     public TaskQuest() {
+        
+        //TODO: need to figure out how to make one of the rows smaller
+        setLayout(new BorderLayout());
+        this.add(this.taskUISetup(), BorderLayout.CENTER);
+        this.playerBar();
+    }
 
-        //TODO: implement responsive grid layout using variables.
-        setLayout(new GridLayout(4, 1, 20, 20));
-        setBackground(new Color(240, 240, 240));
-        
-       
-       
-        
-        
+    private JPanel taskUISetup(){
+        JPanel taskPanel = new JPanel();
+        taskPanel.setLayout(new GridLayout(2, 2, 20, 20));
+        taskPanel.setBackground(new Color(240, 240, 240));
 
-        
-        add(createTile("Task 1"));
-        add(createTile("Task 2"));
-        add(createTile("Task 3"));
-        add(createTile("Task 4"));
-        
+        taskPanel.add(createTile("Task 1"));
+        taskPanel.add(createTile("Task 2"));
+        taskPanel.add(createTile("Task 3"));
+        taskPanel.add(createTile("Task 4"));
 
-      
-
+        return taskPanel;
     }
 
     private JPanel createTile(String title) {
         JPanel tile = new JPanel(new BorderLayout());
-        tile.setBorder(BorderFactory.createLineBorder(Color.GRAY, 5));
+        tile.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         tile.setBackground(new Color(240, 240, 240));
 
         JLabel label = new JLabel(title);
         label.setHorizontalAlignment(JLabel.CENTER);
         tile.add(label, BorderLayout.CENTER);
 
+        //! Creates a new JPanel using the BorderLayout()
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setPreferredSize(new Dimension(tile.getWidth(), 50));
 
         JButton greenButton = createButton("+", new Color(51,153,255));
         JButton redButton = createButton("x", new Color(255, 84, 84, 255));
 
-        redButton.addActionListener(e -> {
-            // Set the visibility of the entire ModuleComponent to false
-            remove(tile);
-            revalidate();
-            repaint();
-        });
-        
-        greenButton.addActionListener(e -> {
-            // Set the visibility of the entire ModuleComponent to false
-            remove(tile);
-            revalidate();
-            repaint();
-        });
-
-
-
+        //! Apeends the button 
         buttonPanel.add(redButton, BorderLayout.WEST);
         buttonPanel.add(greenButton, BorderLayout.EAST);
 
@@ -74,18 +61,22 @@ public class TaskQuest extends JPanel {
         return button;
     }
 
+    private void playerBar(){
+        JPanel panel = new JPanel(new BorderLayout());
 
+        JButton playerButton = createButton(":)", new Color(12,153,255));
+        JButton addTask = createButton("+", new Color(51,153,255));
 
+        panel.add(playerButton, BorderLayout.WEST);
+        panel.add(addTask, BorderLayout.EAST);
 
-
-
-
-
-
+        panel.setPreferredSize(new Dimension(panel.getWidth(), 50));
+        this.add(panel, BorderLayout.SOUTH);
+    }
 
     public static void main(String[] args) {
 
-        //What is this doing???
+        //? What is this doing?
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Tile Tasks");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
