@@ -1,18 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
 
+
 public class TaskQuest extends JPanel {
 
     public TaskQuest() {
 
         //TODO: implement responsive grid layout using variables.
-        setLayout(new GridLayout(2, 2, 20, 20));
+        setLayout(new GridLayout(4, 1, 20, 20));
         setBackground(new Color(240, 240, 240));
+        
+       
+       
+        
+        
 
+        
         add(createTile("Task 1"));
         add(createTile("Task 2"));
         add(createTile("Task 3"));
         add(createTile("Task 4"));
+        
+
+      
+
     }
 
     private JPanel createTile(String title) {
@@ -30,6 +41,22 @@ public class TaskQuest extends JPanel {
         JButton greenButton = createButton("+", new Color(51,153,255));
         JButton redButton = createButton("x", new Color(255, 84, 84, 255));
 
+        redButton.addActionListener(e -> {
+            // Set the visibility of the entire ModuleComponent to false
+            remove(tile);
+            revalidate();
+            repaint();
+        });
+        
+        greenButton.addActionListener(e -> {
+            // Set the visibility of the entire ModuleComponent to false
+            remove(tile);
+            revalidate();
+            repaint();
+        });
+
+
+
         buttonPanel.add(redButton, BorderLayout.WEST);
         buttonPanel.add(greenButton, BorderLayout.EAST);
 
@@ -46,6 +73,15 @@ public class TaskQuest extends JPanel {
         button.setBorderPainted(true);
         return button;
     }
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
 
