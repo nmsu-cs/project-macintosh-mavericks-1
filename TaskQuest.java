@@ -1,14 +1,12 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 
 public class TaskQuest extends JPanel {
 
-    //!Might need to make use of another function for this.
     public TaskQuest() {
         
-        //TODO: need to figure out how to make one of the rows smaller
+        //! Setting frame layout type to BorderLayout
         setLayout(new BorderLayout());
         this.add(this.taskUISetup(), BorderLayout.CENTER);
         this.playerBar();
@@ -83,6 +81,17 @@ public class TaskQuest extends JPanel {
             frame.setContentPane(new TaskQuest());
             frame.setSize(400, 400);
             frame.setLocationRelativeTo(null);
+            Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
+            frame.setIconImage(icon);
+
+            final Taskbar taskBar = Taskbar.getTaskbar();
+
+            try {
+                taskBar.setIconImage(icon);
+            } catch (final UnsupportedOperationException e) {
+                System.out.println("The os does not support: 'taskbar.setIconImage'");
+            }
+
             frame.setVisible(true);
         });
     }
