@@ -73,12 +73,14 @@ public class TaskQuest extends JPanel {
         addTask.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent addTask){
 
-                String task = JOptionPane.showInputDialog(panel, "Testing", null);
+                String task = JOptionPane.showInputDialog(panel, "Enter task", null);
 
-                taskPanel.add(createTile(task + "\n"));
-                taskPanel.setLayout(new GridLayout(0, 2, 20, 20));
-                taskPanel.revalidate();
-                taskPanel.repaint();
+                if (task != null){
+                    taskPanel.add(createTile(task + "\n"));
+                    taskPanel.setLayout(new GridLayout(0, 2, 20, 20));
+                    taskPanel.revalidate();
+                    taskPanel.repaint();
+                }
             }
         });
 
