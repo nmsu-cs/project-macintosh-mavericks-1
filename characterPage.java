@@ -1,8 +1,6 @@
 import java.awt.Color;
-import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,122 +8,115 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class characterPage {
 
-    JLabel counterLabel, perSecLabel;
-    int randomCounter;
-    Font font1,font2;
+public class characterPage{
 
-    randomHandler cHandler = new randomHandler();
+    JButton button1,button2,button3,button4,words,picture,words2;
+    
 
 
 
-    JButton button1,button2,button3,button4;
+
+
     public static void main(String[] args) {
         new characterPage();
     }
 
 
     public characterPage(){
-        randomCounter = 0;
         
         //create font needs to but put before createUI otherwise it won't work in UI
-        //createFont();
-        //createUI();
+      
+        createUI();
     }
 
-    public void createFont(){
-        // new font("font name", font style, font size)
-        font1 = new Font("Comic Sans MS", Font.PLAIN, 32 );
-        font1 = new Font("Comic Sans MS", Font.PLAIN, 15 );
+    public JPanel appBar(){
+        JPanel panel = new JPanel(null);
+        panel.setBackground(Color.blue);
+        panel.setBounds(0,0,480,45);
+        return panel;
     }
 
-    //This needs to be a JPanel instead of a JFrame
-    public JPanel createUI(int width, int height){
-        //create a new window
-        JPanel window = new JPanel();
-        window.setSize(width,height);
-        //window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //window.getContentPane().setBackground(Color.BLACK);
-        window.setBackground(Color.BLACK);
-        window.setLayout(null);
-
-        //area where character will be
-        JPanel characterPanel = new JPanel();
-        characterPanel.setBounds(280,220,200,200);
-        characterPanel.setBackground(Color.black);
-        window.add(characterPanel);
-
-        //get image as an image in javaFX
-        ImageIcon pixelGuy = new ImageIcon(getClass().getClassLoader().getResource("res/defaultCharacter.png"));
-
-        //creates character button
-        JButton pixelButton = new JButton();
-        pixelButton.setBackground(Color.black);
-        pixelButton.setFocusPainted(false);
-        pixelButton.setBorder(null);
-        pixelButton.setIcon(pixelGuy);
-        pixelButton.addActionListener(cHandler);
-        characterPanel.add(pixelButton);
+    public void createUI(){
         
-        //new panel where labels will be located
-        JPanel counterPanel = new JPanel();
-        counterPanel.setBounds(100,100,200,100);
-        counterPanel.setBackground(Color.black);
-        counterPanel.setLayout(new GridLayout(2,1));
-        window.add(counterPanel);
 
-        //how to create labels
-        counterLabel = new JLabel(randomCounter + " Number");
-        counterLabel.setForeground(Color.white);
-        counterLabel.setFont(font1);
-        counterPanel.add(counterLabel);
+        //create a new window
+        JFrame window = new JFrame();
+        //window.setSize(800,600);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().setBackground(Color.blue);
+        window.setLayout(new GridLayout(2,2));
+        window.setMinimumSize(new Dimension(400,400));
 
-        perSecLabel = new JLabel();
-        perSecLabel.setForeground(Color.white);
-        perSecLabel.setFont(font2);
-        counterPanel.add(perSecLabel);
+        
+        JPanel topPanel = new JPanel();
+        //counterPanel.setBounds(100,100,200,100);
+        topPanel.setBackground(Color.green);
+        topPanel.setLayout(new GridLayout(1,3));
+        topPanel.setSize(topPanel.getWidth(), 20);
+        
+        
+        
 
+        window.add(topPanel);
+        
+        // JButton words = new JButton();
+        // words.setFocusPainted(false);
+        // topPanel.add(words);
+        JPanel first = new JPanel();
+        topPanel.add(first);
+
+        //ImageIcon pixelGuy = new ImageIcon(getClass().getClassLoader().getResource("test2.png"));
 
        
+        JLabel picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("test2.png")));
+        topPanel.add(picLabel);
+        //creates character button
+        // JButton pixelButton = new JButton();
+        // pixelButton.setBackground(Color.black);
+        // pixelButton.setFocusPainted(false);
+        // pixelButton.setBorder(null);
+        // pixelButton.setIcon(pixelGuy);
+        // topPanel.add(pixelButton);
+        topPanel.add(picLabel);
 
+        JPanel test = new JPanel();
+        topPanel.add(test);
+        // JButton words2 = new JButton();
+        // words2.setFocusPainted(false);
+        // topPanel.add(words2);
+        
+        
+        
+        
+        
+        
+        
+        
         JPanel itemPanel = new JPanel();
-        itemPanel.setBounds(100,450,600,100);
-        itemPanel.setBackground(Color.blue);
-        itemPanel.setLayout(new GridLayout(1,3));
+        //counterPanel.setBounds(100,100,200,100);
+        itemPanel.setBackground(Color.black);
+        itemPanel.setLayout(new GridLayout(2,2));
         window.add(itemPanel);
-
-
-        button1 = new JButton("Armor");
-        button1.setFont(font1);
+        
+        JButton button1 = new JButton("Test");
         button1.setFocusPainted(false);
-        button1.addActionListener(cHandler);
         itemPanel.add(button1);
-
-        button2 = new JButton("Weapon");
-        button2.setFont(font1);
-        button2.setFocusPainted(false);
-        button2.addActionListener(cHandler);
+        
+        JButton button2 = new JButton("Test2");
+        button1.setFocusPainted(false);
         itemPanel.add(button2);
 
-        button3 = new JButton("Buff");
-        button3.setFont(font1);
-        button3.setFocusPainted(false);
-        button3.addActionListener(cHandler);
-        button3.setActionCommand("");
+        JButton button3 = new JButton("Test3");
+        button1.setFocusPainted(false);
         itemPanel.add(button3);
+
+        JButton button4 = new JButton("Test4");
+        button1.setFocusPainted(false);
+        itemPanel.add(button4);
         
         
         window.setVisible(true);
-        return window;
-    }
 
-    public class randomHandler implements ActionListener{
-        public void actionPerformed(ActionEvent event){
-            randomCounter++;
-            counterLabel.setText(randomCounter + " Number");
-        }
     }
-
-  
 }
