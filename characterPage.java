@@ -27,7 +27,7 @@ public class characterPage{
         
         //create font needs to but put before createUI otherwise it won't work in UI
       
-        createUI();
+        //createUI();
     }
 
     public JPanel appBar(){
@@ -37,14 +37,14 @@ public class characterPage{
         return panel;
     }
 
-    public void createUI(){
+    public JPanel createUI(){
         
 
         //create a new window
-        JFrame window = new JFrame();
+        JPanel window = new JPanel();
         //window.setSize(800,600);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(Color.blue);
+        //window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //window.getContentPane().setBackground(Color.blue);
         window.setLayout(new GridLayout(2,2));
         window.setMinimumSize(new Dimension(400,400));
 
@@ -117,6 +117,7 @@ public class characterPage{
         
         
         window.setVisible(true);
+        return window;
 
     }
 }

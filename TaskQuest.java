@@ -3,12 +3,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.formdev.flatlaf.FlatDarkLaf;
+//import com.formdev.flatlaf.FlatDarkLaf;
+import java.util.ArrayList;
 
 public class TaskQuest extends JPanel {
 
-    //This exposes the taskPanel to the entire class.
+    //Exposes some of the JComponents to the entire class. 
     private JPanel taskPanel;
+    private JPanel playerBar;
+    private ArrayList<JPanel> tasks = new ArrayList<JPanel>();
 
     public TaskQuest() {
         setLayout(new BorderLayout());
@@ -25,14 +28,13 @@ public class TaskQuest extends JPanel {
 
     private JPanel createTile(String title) {
         JPanel tile = new JPanel(new BorderLayout());
-        tile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        //tile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         tile.setBackground(new Color(240, 240, 240));
 
         JLabel label = new JLabel(title);
         label.setHorizontalAlignment(JLabel.CENTER);
         tile.add(label, BorderLayout.CENTER);
 
-        //! Creates a new JPanel using the BorderLayout()
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setPreferredSize(new Dimension(tile.getWidth()/2, 50));
 
@@ -40,6 +42,7 @@ public class TaskQuest extends JPanel {
 
         completeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent delete){
+                tasks.remove(tile);
                 taskPanel.remove(tile);
                 taskPanel.revalidate();
                 taskPanel.repaint();
@@ -62,8 +65,8 @@ public class TaskQuest extends JPanel {
     }
 
     private JPanel playerBar(){
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        playerBar = new JPanel(new BorderLayout());
+        playerBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JButton playerButton = createButton("👤", new Color(12,153,255));
         JButton addTask = createButton("➕", new Color(51,153,255));
@@ -72,16 +75,17 @@ public class TaskQuest extends JPanel {
             public void actionPerformed(ActionEvent addTask){
 
                 //Temp solution as we should add ability to input other details
-                String task = JOptionPane.showInputDialog(panel, "Enter task", "Task entry", JOptionPane.INFORMATION_MESSAGE);
+                String task = JOptionPane.showInputDialog(playerBar, "Enter task", "Task entry", JOptionPane.INFORMATION_MESSAGE);
 
                 //Adding conditional to check input is valid
                 if (task != null && task.length() > 0){
+                    tasks.add(playerBar);
                     taskPanel.add(createTile(task + "\n"));
                     taskPanel.setLayout(new GridLayout(0, 2, 20, 20));
                     taskPanel.revalidate();
                     taskPanel.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(panel, "No task added!");
+                    JOptionPane.showMessageDialog(taskPanel, "No task added!");
                 }
             }
         });
@@ -89,23 +93,24 @@ public class TaskQuest extends JPanel {
         playerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent characterPage){
                 taskPanel.removeAll();
+                playerBar.setVisible(false);
                 characterPage page = new characterPage();
-                taskPanel.add(page.createUI(taskPanel.getWidth(), taskPanel.getHeight()));
+                taskPanel.add(page.createUI());
                 taskPanel.revalidate();
             }
         });
 
-        panel.add(playerButton, BorderLayout.WEST);
-        panel.add(addTask, BorderLayout.EAST);
+        playerBar.add(playerButton, BorderLayout.WEST);
+        playerBar.add(addTask, BorderLayout.EAST);
 
-        panel.setPreferredSize(new Dimension(panel.getWidth(), 50));
-        return panel;
+        playerBar.setPreferredSize(new Dimension(playerBar.getWidth(), 50));
+        return playerBar;
     }
 
     public static void main(String[] args) {
 
         //! This needs to be called before making any UI components. 
-        FlatDarkLaf.setup();
+        //FlatDarkLaf.setup();
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("TaskQuest");
@@ -117,7 +122,7 @@ public class TaskQuest extends JPanel {
             Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
             frame.setIconImage(icon);
 
-
+            //! Comment this out if your app crashes
             try {
                 final Taskbar taskBar = Taskbar.getTaskbar();
                 taskBar.setIconImage(icon);
