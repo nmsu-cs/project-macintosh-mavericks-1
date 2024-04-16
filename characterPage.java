@@ -28,9 +28,10 @@ public class characterPage {
 
     public characterPage(){
         randomCounter = 0;
+        
         //create font needs to but put before createUI otherwise it won't work in UI
-        createFont();
-        createUI();
+        //createFont();
+        //createUI();
     }
 
     public void createFont(){
@@ -39,12 +40,14 @@ public class characterPage {
         font1 = new Font("Comic Sans MS", Font.PLAIN, 15 );
     }
 
-    public void createUI(){
+    //This needs to be a JPanel instead of a JFrame
+    public JPanel createUI(int width, int height){
         //create a new window
-        JFrame window = new JFrame();
-        window.setSize(800,600);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(Color.BLACK);
+        JPanel window = new JPanel();
+        window.setSize(width,height);
+        //window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //window.getContentPane().setBackground(Color.BLACK);
+        window.setBackground(Color.BLACK);
         window.setLayout(null);
 
         //area where character will be
@@ -114,6 +117,7 @@ public class characterPage {
         
         
         window.setVisible(true);
+        return window;
     }
 
     public class randomHandler implements ActionListener{

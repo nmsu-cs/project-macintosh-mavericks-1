@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 public class TaskQuest extends JPanel {
 
@@ -10,9 +11,7 @@ public class TaskQuest extends JPanel {
     private JPanel taskPanel;
 
     public TaskQuest() {
-        //Sets layout type to BorderLayout
         setLayout(new BorderLayout());
-
         this.add(this.taskUISetup(), BorderLayout.CENTER);
         this.add(this.playerBar(), BorderLayout.SOUTH);
     }
@@ -21,7 +20,6 @@ public class TaskQuest extends JPanel {
         taskPanel = new JPanel();
         taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
         taskPanel.setBackground(new Color(240, 240, 240));
-
         return taskPanel;
     }
 
@@ -88,6 +86,15 @@ public class TaskQuest extends JPanel {
             }
         });
 
+        playerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent characterPage){
+                taskPanel.removeAll();
+                characterPage page = new characterPage();
+                taskPanel.add(page.createUI(taskPanel.getWidth(), taskPanel.getHeight()));
+                taskPanel.revalidate();
+            }
+        });
+
         panel.add(playerButton, BorderLayout.WEST);
         panel.add(addTask, BorderLayout.EAST);
 
@@ -95,10 +102,11 @@ public class TaskQuest extends JPanel {
         return panel;
     }
 
-    //todo: clean up this code
     public static void main(String[] args) {
 
-        //? What is this doing
+        //! This needs to be called before making any UI components. 
+        FlatDarkLaf.setup();
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("TaskQuest");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,17 +117,14 @@ public class TaskQuest extends JPanel {
             Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
             frame.setIconImage(icon);
 
-            final Taskbar taskBar = Taskbar.getTaskbar();
 
             try {
+                final Taskbar taskBar = Taskbar.getTaskbar();
                 taskBar.setIconImage(icon);
-
             } catch (final UnsupportedOperationException e) {
                 System.out.println("The os does not support: 'taskbar.setIconImage'");
             }
 
-            //Themes to consider FlatLight
-            
             frame.setVisible(true);
         });
     }

@@ -105,7 +105,8 @@ public class Taskxp extends JPanel{
       
          public void actionPerformed(ActionEvent event){
             xpRecieved();
-            button.setLabel("Press if task is complete: " + level);
+            //! commenting as it causes crashes
+            //button.setLabel("Press if task is complete: " + level);
          
          }
       
