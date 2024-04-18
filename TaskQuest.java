@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,7 @@ public class TaskQuest extends JPanel {
 
         JLabel label = new JLabel(title);
         label.setHorizontalAlignment(JLabel.CENTER);
+        label.setBorder(getBorder());
         tile.add(label, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
@@ -93,9 +95,10 @@ public class TaskQuest extends JPanel {
         playerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent characterPage){
                 taskPanel.removeAll();
+                taskPanel.setLayout(new BorderLayout());
                 playerBar.setVisible(false);
                 characterPage page = new characterPage();
-                taskPanel.add(page.createUI());
+                taskPanel.add(page.createUI(), BorderLayout.CENTER);
                 taskPanel.revalidate();
             }
         });
