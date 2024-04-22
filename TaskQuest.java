@@ -24,9 +24,14 @@ public class TaskQuest extends JPanel {
         taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
         tasks = saveData.load();
 
+        if (tasks.size() >= 2){
+            taskPanel.setLayout(new GridLayout(0, 2, 20, 20));
+        }
+
         for (String task: tasks){
             System.out.println(task);
-            this.createTile(task);
+            taskPanel.add(createTile(task));
+            revalidate();
         }
 
         //taskPanel.setBackground(new Color(240, 240, 240));
@@ -55,7 +60,14 @@ public class TaskQuest extends JPanel {
 
         completeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent delete){
-                //tasks.remove(tile);
+
+                for (int i = 0; i < tasks.size(); i++){
+                    if (tasks.get(i) == title){
+                        tasks.remove(i);
+                    }
+                }
+
+                saveData.save(tasks);
                 taskPanel.remove(tile);
                 taskPanel.revalidate();
                 taskPanel.repaint();

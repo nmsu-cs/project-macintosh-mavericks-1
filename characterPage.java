@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,9 +24,6 @@ public class characterPage{
 
     public characterPage(){
         
-        //create font needs to but put before createUI otherwise it won't work in UI
-      
-        //createUI();
     }
 
     public JPanel appBar(){
@@ -55,9 +51,6 @@ public class characterPage{
         topPanel.setLayout(new GridLayout(1,3));
         topPanel.setSize(topPanel.getWidth(), 20);
         
-        
-        
-
         window.add(topPanel);
         
         // JButton words = new JButton();
