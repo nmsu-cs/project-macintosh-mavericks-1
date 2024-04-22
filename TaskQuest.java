@@ -1,10 +1,9 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.ArrayList;
 
 public class TaskQuest extends JPanel {
@@ -12,7 +11,7 @@ public class TaskQuest extends JPanel {
     //Exposes some of the JComponents to the entire class. 
     private JPanel taskPanel;
     private JPanel playerBar;
-    private ArrayList<JPanel> tasks = new ArrayList<JPanel>();
+    private ArrayList<String> tasks = new ArrayList<String>();
 
     public TaskQuest() {
         setLayout(new BorderLayout());
@@ -23,13 +22,25 @@ public class TaskQuest extends JPanel {
     private JPanel taskUISetup(){
         taskPanel = new JPanel();
         taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
-        taskPanel.setBackground(new Color(240, 240, 240));
+        tasks = saveData.load();
+
+        for (String task: tasks){
+            System.out.println(task);
+            this.createTile(task);
+        }
+
+        //taskPanel.setBackground(new Color(240, 240, 240));
+        taskPanel.setBackground(Color.black);
         return taskPanel;
     }
 
     private JPanel createTile(String title) {
         JPanel tile = new JPanel(new BorderLayout());
         //tile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        JPanel test = new JPanel();
+        JPanel test1 = new JPanel();
+        JPanel test2 = new JPanel();
+        
         tile.setBackground(new Color(240, 240, 240));
 
         JLabel label = new JLabel(title);
@@ -44,14 +55,18 @@ public class TaskQuest extends JPanel {
 
         completeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent delete){
-                tasks.remove(tile);
+                //tasks.remove(tile);
                 taskPanel.remove(tile);
                 taskPanel.revalidate();
                 taskPanel.repaint();
             }
         });
 
+
         buttonPanel.add(completeButton, BorderLayout.EAST);
+        tile.add(test, BorderLayout.NORTH);
+        tile.add(test1, BorderLayout.EAST);
+        tile.add(test2, BorderLayout.WEST);
         tile.add(buttonPanel, BorderLayout.SOUTH);
 
         return tile;
@@ -77,11 +92,12 @@ public class TaskQuest extends JPanel {
             public void actionPerformed(ActionEvent addTask){
 
                 //Temp solution as we should add ability to input other details
-                String task = JOptionPane.showInputDialog(playerBar, "Enter task", "Task entry", JOptionPane.INFORMATION_MESSAGE);
+                String task = JOptionPane.showInputDialog(taskPanel, "Enter task", "Task entry", JOptionPane.INFORMATION_MESSAGE);
 
                 //Adding conditional to check input is valid
                 if (task != null && task.length() > 0){
-                    tasks.add(playerBar);
+                    tasks.add(task);
+                    saveData.save(tasks);
                     taskPanel.add(createTile(task + "\n"));
                     taskPanel.setLayout(new GridLayout(0, 2, 20, 20));
                     taskPanel.revalidate();
@@ -94,6 +110,7 @@ public class TaskQuest extends JPanel {
 
         playerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent characterPage){
+    
                 taskPanel.removeAll();
                 taskPanel.setLayout(new BorderLayout());
                 playerBar.setVisible(false);
@@ -113,7 +130,7 @@ public class TaskQuest extends JPanel {
     public static void main(String[] args) {
 
         //! This needs to be called before making any UI components. 
-        //FlatDarkLaf.setup();
+        FlatDarkLaf.setup();
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("TaskQuest");
@@ -124,6 +141,7 @@ public class TaskQuest extends JPanel {
             frame.setMinimumSize(new Dimension(400, 400));
             Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
             frame.setIconImage(icon);
+            frame.setBackground(Color.black);
 
             //! Comment this out if your app crashes
             try {
