@@ -1,11 +1,8 @@
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 
 public class Taskxp extends JPanel{
 
@@ -23,8 +20,6 @@ public class Taskxp extends JPanel{
       
       public static void main(String[] args){
          new Taskxp();
-         
-         
       }
       
       public Taskxp(){
@@ -96,8 +91,6 @@ public class Taskxp extends JPanel{
          xpBar.setValue(0);
          level = level + 1;
          xp = 0;}
-         
-      
       }
       
       
@@ -107,7 +100,7 @@ public class Taskxp extends JPanel{
             xpRecieved();
             //! commenting as it causes crashes
             //button.setLabel("Press if task is complete: " + level);
-         
+            button.setText("Press if task is complete: " + level);
          }
       
       }

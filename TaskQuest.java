@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,7 @@ public class TaskQuest extends JPanel {
 
     public JPanel taskUISetup(){
         taskPanel = new JPanel();
-        taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
+        taskPanel.setLayout(new GridLayout(0, 1, 10, 20));
         tasks = saveData.load();
 
         if (tasks.size() >= 2){
@@ -33,15 +34,13 @@ public class TaskQuest extends JPanel {
             revalidate();
         }
 
+        taskPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         taskPanel.setBackground(Color.black);
         return taskPanel;
     }
 
     private JPanel createTile(String title) {
         JPanel tile = new JPanel(new BorderLayout());
-        JPanel test = new JPanel();
-        JPanel test1 = new JPanel();
-        JPanel test2 = new JPanel();
         
         tile.setBackground(new Color(240, 240, 240));
 
@@ -51,7 +50,8 @@ public class TaskQuest extends JPanel {
         tile.add(label, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
-        buttonPanel.setPreferredSize(new Dimension(tile.getWidth()/2, 50));
+        buttonPanel.setPreferredSize(new Dimension(tile.getWidth()/2, 25));
+        buttonPanel.setBorder(new EmptyBorder(5, 10, 5, 10));
 
         JButton completeButton = createButton("✓", new Color(0, 200, 0));
 
@@ -75,10 +75,7 @@ public class TaskQuest extends JPanel {
             }
         });
 
-        buttonPanel.add(completeButton, BorderLayout.EAST);
-        tile.add(test, BorderLayout.NORTH);
-        tile.add(test1, BorderLayout.EAST);
-        tile.add(test2, BorderLayout.WEST);
+        buttonPanel.add(completeButton, BorderLayout.CENTER);
         tile.add(buttonPanel, BorderLayout.SOUTH);
 
         return tile;
@@ -87,9 +84,9 @@ public class TaskQuest extends JPanel {
     public static JButton createButton(String text, Color color) {
         JButton button = new JButton(text);
         button.setBackground(color);
-        button.setForeground(color);
+        button.setForeground(Color.black);
         button.setOpaque(true);
-        button.setBorderPainted(true);
+        button.setBorderPainted(false);
         return button;
     }
 
