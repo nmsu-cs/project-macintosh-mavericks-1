@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 
 public class characterPage{
@@ -83,14 +84,13 @@ public class characterPage{
         button1.setFocusPainted(false);
         itemPanel.add(button4);
         
-        
         window.setVisible(true);
         return window;
-
     }
 
     public JPanel characterBar(){
         JPanel playerBar = new JPanel(new BorderLayout());
+        playerBar.setBorder(new EmptyBorder(4, 4, 4, 4));
         JButton taskButton = TaskQuest.createButton("📌", new Color(12,153,255));
 
         taskButton.addActionListener(new ActionListener() {
@@ -102,6 +102,7 @@ public class characterPage{
                 window.revalidate();
                 
                 playerBar.removeAll();
+                playerBar.setBorder(null);
                 playerBar.add(temp.playerBar());
                 playerBar.revalidate();
             }

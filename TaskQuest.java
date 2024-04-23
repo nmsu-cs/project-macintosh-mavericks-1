@@ -1,9 +1,9 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.ArrayList;
 
@@ -46,14 +46,15 @@ public class TaskQuest extends JPanel {
 
         JLabel label = new JLabel(title);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBorder(getBorder());
+
+        label.setForeground(Color.BLACK);
         tile.add(label, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setPreferredSize(new Dimension(tile.getWidth()/2, 25));
         buttonPanel.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-        JButton completeButton = createButton("✓", new Color(0, 200, 0));
+        JButton completeButton = createButton("✓", new Color(36, 200, 68));
 
         completeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent delete){
@@ -92,7 +93,7 @@ public class TaskQuest extends JPanel {
 
     public JPanel playerBar(){
         playerBar = new JPanel(new BorderLayout());
-        playerBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        playerBar.setBorder(new EmptyBorder(4, 4, 4, 4));
 
         JButton playerButton = createButton("👤", new Color(12,153,255));
         JButton addTask = createButton("➕", new Color(51,153,255));
@@ -121,6 +122,7 @@ public class TaskQuest extends JPanel {
             public void actionPerformed(ActionEvent characterPage){
 
                 taskPanel.removeAll();
+                taskPanel.setBorder(null);
                 taskPanel.setLayout(new BorderLayout());
                 characterPage page = new characterPage();
                 taskPanel.add(page.createUI(), BorderLayout.CENTER);
