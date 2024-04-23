@@ -1,7 +1,9 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,22 +12,13 @@ import javax.swing.JPanel;
 
 public class characterPage{
 
-    JButton button1,button2,button3,button4,words,picture,words2;
-    
+    JPanel window;
+    JButton button1, button2, button3, button4, words, picture, words2;
 
+    // Not really making use of the constructor?
+    public characterPage(){}
 
-
-
-
-    public static void main(String[] args) {
-        new characterPage();
-    }
-
-
-    public characterPage(){
-        
-    }
-
+    //? What is this doing. Waiting for ok to delete
     public JPanel appBar(){
         JPanel panel = new JPanel(null);
         panel.setBackground(Color.blue);
@@ -35,18 +28,11 @@ public class characterPage{
 
     public JPanel createUI(){
         
-
-        //create a new window
-        JPanel window = new JPanel();
-        //window.setSize(800,600);
-        //window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //window.getContentPane().setBackground(Color.blue);
+        window = new JPanel();
         window.setLayout(new GridLayout(2,2));
         window.setMinimumSize(new Dimension(400,400));
 
-        
         JPanel topPanel = new JPanel();
-        //counterPanel.setBounds(100,100,200,100);
         topPanel.setBackground(Color.green);
         topPanel.setLayout(new GridLayout(1,3));
         topPanel.setSize(topPanel.getWidth(), 20);
@@ -75,19 +61,8 @@ public class characterPage{
 
         JPanel test = new JPanel();
         topPanel.add(test);
-        // JButton words2 = new JButton();
-        // words2.setFocusPainted(false);
-        // topPanel.add(words2);
-        
-        
-        
-        
-        
-        
-        
         
         JPanel itemPanel = new JPanel();
-        //counterPanel.setBounds(100,100,200,100);
         itemPanel.setBackground(Color.black);
         itemPanel.setLayout(new GridLayout(2,2));
         window.add(itemPanel);
@@ -113,4 +88,28 @@ public class characterPage{
         return window;
 
     }
+
+    public JPanel characterBar(){
+        JPanel playerBar = new JPanel(new BorderLayout());
+        JButton taskButton = TaskQuest.createButton("📌", new Color(12,153,255));
+
+        taskButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent taskPage){
+                TaskQuest temp = new TaskQuest();
+                window.removeAll();
+                window.setLayout(new BorderLayout());
+                window.add(temp.taskUISetup());
+                window.revalidate();
+                
+                playerBar.removeAll();
+                playerBar.add(temp.playerBar());
+                playerBar.revalidate();
+            }
+        });
+
+        playerBar.add(taskButton, BorderLayout.WEST);
+        return playerBar;
+    }
+
+    
 }

@@ -19,7 +19,7 @@ public class TaskQuest extends JPanel {
         this.add(this.playerBar(), BorderLayout.SOUTH);
     }
 
-    private JPanel taskUISetup(){
+    public JPanel taskUISetup(){
         taskPanel = new JPanel();
         taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
         tasks = saveData.load();
@@ -29,19 +29,16 @@ public class TaskQuest extends JPanel {
         }
 
         for (String task: tasks){
-            System.out.println(task);
             taskPanel.add(createTile(task));
             revalidate();
         }
 
-        //taskPanel.setBackground(new Color(240, 240, 240));
         taskPanel.setBackground(Color.black);
         return taskPanel;
     }
 
     private JPanel createTile(String title) {
         JPanel tile = new JPanel(new BorderLayout());
-        //tile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         JPanel test = new JPanel();
         JPanel test1 = new JPanel();
         JPanel test2 = new JPanel();
@@ -67,13 +64,16 @@ public class TaskQuest extends JPanel {
                     }
                 }
 
+                if (tasks.size() <= 2){
+                    taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
+                }
+
                 saveData.save(tasks);
                 taskPanel.remove(tile);
                 taskPanel.revalidate();
                 taskPanel.repaint();
             }
         });
-
 
         buttonPanel.add(completeButton, BorderLayout.EAST);
         tile.add(test, BorderLayout.NORTH);
@@ -84,7 +84,7 @@ public class TaskQuest extends JPanel {
         return tile;
     }
 
-    private JButton createButton(String text, Color color) {
+    public static JButton createButton(String text, Color color) {
         JButton button = new JButton(text);
         button.setBackground(color);
         button.setForeground(color);
@@ -93,7 +93,7 @@ public class TaskQuest extends JPanel {
         return button;
     }
 
-    private JPanel playerBar(){
+    public JPanel playerBar(){
         playerBar = new JPanel(new BorderLayout());
         playerBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
@@ -103,7 +103,6 @@ public class TaskQuest extends JPanel {
         addTask.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent addTask){
 
-                //Temp solution as we should add ability to input other details
                 String task = JOptionPane.showInputDialog(taskPanel, "Enter task", "Task entry", JOptionPane.INFORMATION_MESSAGE);
 
                 //Adding conditional to check input is valid
@@ -111,6 +110,7 @@ public class TaskQuest extends JPanel {
                     tasks.add(task);
                     saveData.save(tasks);
                     taskPanel.add(createTile(task + "\n"));
+
                     taskPanel.setLayout(new GridLayout(0, 2, 20, 20));
                     taskPanel.revalidate();
                     taskPanel.repaint();
@@ -122,13 +122,17 @@ public class TaskQuest extends JPanel {
 
         playerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent characterPage){
-    
+
                 taskPanel.removeAll();
                 taskPanel.setLayout(new BorderLayout());
-                playerBar.setVisible(false);
                 characterPage page = new characterPage();
                 taskPanel.add(page.createUI(), BorderLayout.CENTER);
                 taskPanel.revalidate();
+
+                playerBar.setBorder(null);
+                playerBar.removeAll();
+                playerBar.add(page.characterBar());
+                playerBar.revalidate();
             }
         });
 
@@ -141,7 +145,7 @@ public class TaskQuest extends JPanel {
 
     public static void main(String[] args) {
 
-        //! This needs to be called before making any UI components. 
+        //! Comment this out if your app crashes
         FlatDarkLaf.setup();
 
         SwingUtilities.invokeLater(() -> {
