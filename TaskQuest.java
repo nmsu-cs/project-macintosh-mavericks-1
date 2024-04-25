@@ -16,7 +16,7 @@ public class TaskQuest extends JPanel {
     private JProgressBar xpBar;
     public static int xpProgress = 0;
     public static int xpLevel = 0;
-    private static JLabel xpLabel = new JLabel("" + xpLevel);
+    static JLabel xpLabel = new JLabel("" + xpLevel);
     private ArrayList<String> tasks = new ArrayList<String>();
 
     public TaskQuest() {
@@ -107,7 +107,7 @@ public class TaskQuest extends JPanel {
                         tasks.remove(i); 
                     }
                 }  
-                
+
                 if (tasks.size() <= 2){
                     taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
                 }
@@ -135,13 +135,10 @@ public class TaskQuest extends JPanel {
         return button;
     }
 
-
-
     public JPanel playerBar(){
         playerBar = new JPanel(new BorderLayout());
         playerBar.setBorder(new EmptyBorder(4, 4, 4, 4));
 
-        // add here
         int[] playerStat = saveData.loadXP();
         System.out.println(playerStat[0]);
         System.out.println(playerStat[1]);
@@ -153,7 +150,6 @@ public class TaskQuest extends JPanel {
         xpBarPanel.add(xpLabel, BorderLayout.WEST);
         xpBar = new JProgressBar(0,5);// takes 10 tasks to level up
         
-        //add here
         xpBar.setValue(playerStat[1]);
         xpBarPanel.add(xpBar, BorderLayout.CENTER);
 
