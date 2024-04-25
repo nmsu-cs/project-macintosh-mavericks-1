@@ -76,7 +76,26 @@ public class TaskQuest extends JPanel {
             }
         });
 
-        buttonPanel.add(completeButton, BorderLayout.CENTER);
+        JButton deleteButton = createButton("X", new Color(200, 36, 36));
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent delete) {
+                for(int i = 0; i < tasks.size(); i++) {
+                    if(tasks.get(i) == title) {
+                        tasks.remove(i); 
+                    }
+                }  
+                if (tasks.size() <= 2){
+                    taskPanel.setLayout(new GridLayout(0, 1, 20, 20));
+                }
+                saveData.save(tasks);
+                taskPanel.remove(tile);
+                taskPanel.revalidate();
+                taskPanel.repaint();
+            }
+        });
+
+        buttonPanel.add(deleteButton, BorderLayout.WEST);
+        buttonPanel.add(completeButton, BorderLayout.EAST);
         tile.add(buttonPanel, BorderLayout.SOUTH);
 
         return tile;
@@ -90,6 +109,8 @@ public class TaskQuest extends JPanel {
         button.setBorderPainted(false);
         return button;
     }
+
+
 
     public JPanel playerBar(){
         playerBar = new JPanel(new BorderLayout());
@@ -153,7 +174,7 @@ public class TaskQuest extends JPanel {
             frame.setContentPane(new TaskQuest());
             frame.setSize(400, 400);
             frame.setLocationRelativeTo(null);
-            frame.setMinimumSize(new Dimension(600, 400));
+            frame.setMinimumSize(new Dimension(400, 400));
             Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
             frame.setIconImage(icon);
             frame.setBackground(Color.black);
