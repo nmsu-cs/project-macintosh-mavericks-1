@@ -174,7 +174,7 @@ public class TaskQuest extends JPanel {
             frame.setContentPane(new TaskQuest());
             frame.setSize(400, 400);
             frame.setLocationRelativeTo(null);
-            frame.setMinimumSize(new Dimension(400, 400));
+            frame.setMinimumSize(new Dimension(600, 400));
             Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
             frame.setIconImage(icon);
             frame.setBackground(Color.black);
