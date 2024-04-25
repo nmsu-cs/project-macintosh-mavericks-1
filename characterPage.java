@@ -26,14 +26,13 @@ public class characterPage{
     Weapon longSword, shortSword, magicWand, comingSoonW, comingSoon;
     Shield woodShield, stoneShield, ironShield, comingSoonS;
     JTextArea test;
-    int xp;
+    //int xp;
     //JButton button1, button2, button3, button4, words, picture, words2;
 
     // Not really making use of the constructor?
     public characterPage(){
         weaponPanelToggle = shieldPanelToggle = false; //lsOwned = mwOwned = stsOwned = isOwned = false;
         //ssOwned = wsOwned = true;
-        xp = 3;
     }
 
     //? What is this doing. Waiting for ok to delete
@@ -215,6 +214,7 @@ public class characterPage{
                 window.setLayout(new BorderLayout());
                 window.add(temp.taskUISetup());
                 window.revalidate();
+                //temp.xpProgress = TaskQuest.xpProgress;
                 
                 playerBar.removeAll();
                 playerBar.setBorder(null);
@@ -223,7 +223,9 @@ public class characterPage{
             }
         });
 
+
         playerBar.add(taskButton, BorderLayout.WEST);
+        playerBar.add(TaskQuest.xpBarPanel, BorderLayout.CENTER);
         return playerBar;
     }
 

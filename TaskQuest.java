@@ -12,6 +12,11 @@ public class TaskQuest extends JPanel {
     //Exposes some of the JComponents to the entire class. 
     private JPanel taskPanel;
     private JPanel playerBar;
+    public static JPanel xpBarPanel;
+    private JProgressBar xpBar;
+    public static int xpProgress = 0;
+    public static int xpLevel = 0;
+    private static JLabel xpLabel = new JLabel("" + xpLevel);
     private ArrayList<String> tasks = new ArrayList<String>();
 
     public TaskQuest() {
@@ -58,7 +63,15 @@ public class TaskQuest extends JPanel {
 
         completeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent delete){
-
+                if(xpProgress >= 5){
+                    xpProgress = 0;
+                    xpLevel++;
+                    xpLabel.setText("" + xpLevel);
+                }
+                else{
+                    xpProgress++;
+                }
+                xpBar.setValue(xpProgress);
                 for (int i = 0; i < tasks.size(); i++){
                     if (tasks.get(i) == title){
                         tasks.remove(i);
@@ -115,6 +128,14 @@ public class TaskQuest extends JPanel {
     public JPanel playerBar(){
         playerBar = new JPanel(new BorderLayout());
         playerBar.setBorder(new EmptyBorder(4, 4, 4, 4));
+        xpLabel.setText("" + xpLevel);
+        xpLabel.setForeground(Color.white);
+        xpBarPanel = new JPanel(new BorderLayout());
+        xpBarPanel.setBackground(Color.black);
+        xpBarPanel.add(xpLabel, BorderLayout.WEST);
+        xpBar = new JProgressBar(0,5);// takes 10 tasks to level up
+        xpBar.setValue(xpProgress);
+        xpBarPanel.add(xpBar, BorderLayout.CENTER);
 
         JButton playerButton = createButton("👤", new Color(12,153,255));
         JButton addTask = createButton("➕", new Color(51,153,255));
@@ -158,6 +179,7 @@ public class TaskQuest extends JPanel {
 
         playerBar.add(playerButton, BorderLayout.WEST);
         playerBar.add(addTask, BorderLayout.EAST);
+        playerBar.add(xpBarPanel, BorderLayout.CENTER);
 
         playerBar.setPreferredSize(new Dimension(playerBar.getWidth(), 50));
         return playerBar;
