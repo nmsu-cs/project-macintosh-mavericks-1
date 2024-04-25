@@ -12,12 +12,19 @@ import javax.swing.border.EmptyBorder;
 
 
 public class characterPage{
-
+    randomHandler cHandler = new randomHandler();
     JPanel window;
-    JButton button1, button2, button3, button4, words, picture, words2;
+    JPanel topPanel, first, test, weaponPanel;
+    JLabel picLabel;
+    boolean weaponPanelToggle;
+    JButton shortSwordB;
+    Weapon longSword, shortSword, magicWand, comingSoon;
+    //JButton button1, button2, button3, button4, words, picture, words2;
 
     // Not really making use of the constructor?
-    public characterPage(){}
+    public characterPage(){
+        weaponPanelToggle = false;
+    }
 
     //? What is this doing. Waiting for ok to delete
     public JPanel appBar(){
@@ -31,9 +38,9 @@ public class characterPage{
         
         window = new JPanel();
         window.setLayout(new GridLayout(2,2));
-        window.setMinimumSize(new Dimension(400,400));
+        window.setMinimumSize(new Dimension(600,400));
 
-        JPanel topPanel = new JPanel();
+        topPanel = new JPanel();
         topPanel.setBackground(Color.green);
         topPanel.setLayout(new GridLayout(1,3));
         topPanel.setSize(topPanel.getWidth(), 20);
@@ -43,49 +50,104 @@ public class characterPage{
         // JButton words = new JButton();
         // words.setFocusPainted(false);
         // topPanel.add(words);
-        JPanel first = new JPanel();
+        first = new JPanel();
         topPanel.add(first);
 
         //ImageIcon pixelGuy = new ImageIcon(getClass().getClassLoader().getResource("test2.png"));
 
        
-        JLabel picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("test2.png")));
+        //picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("test2.png")));
+        defaultCharacter();
         topPanel.add(picLabel);
-        //creates character button
-        // JButton pixelButton = new JButton();
-        // pixelButton.setBackground(Color.black);
-        // pixelButton.setFocusPainted(false);
-        // pixelButton.setBorder(null);
-        // pixelButton.setIcon(pixelGuy);
-        // topPanel.add(pixelButton);
         topPanel.add(picLabel);
 
-        JPanel test = new JPanel();
+        test = new JPanel();
         topPanel.add(test);
         
         JPanel itemPanel = new JPanel();
         itemPanel.setBackground(Color.black);
         itemPanel.setLayout(new GridLayout(2,2));
         window.add(itemPanel);
-        
-        JButton button1 = new JButton("Test");
-        button1.setFocusPainted(false);
-        itemPanel.add(button1);
-        
-        JButton button2 = new JButton("Test2");
-        button1.setFocusPainted(false);
-        itemPanel.add(button2);
 
-        JButton button3 = new JButton("Test3");
-        button1.setFocusPainted(false);
-        itemPanel.add(button3);
 
-        JButton button4 = new JButton("Test4");
-        button1.setFocusPainted(false);
-        itemPanel.add(button4);
+        weaponPanel = new JPanel();
+        weaponPanel.setBackground(Color.black);
+        weaponPanel.setLayout(new GridLayout(2,2));
+
+        shortSword = new Weapon(false, false, 5, "Short Sword"); 
+        longSword = new Weapon(false, false, 10, "Long Sword");
+        magicWand = new Weapon(false, false, 15, "Magic Wand");
+        comingSoon = new Weapon(false, false, 0, "Coming Soon");
+
+        //ImageIcon ssImage = new ImageIcon(getClass().getClassLoader().getResource("res/shortSword.png"));
+        shortSwordB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/shortSword.png")));
+        shortSwordB.setFocusPainted(false);
+        shortSwordB.setBackground(Color.BLACK);
+        shortSwordB.addActionListener(cHandler);
+        shortSwordB.setActionCommand("Short Sword");
+        //shortSwordB.setIcon(ssImage);
+        weaponPanel.add(shortSwordB);
+        
+        JButton longSwordB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/longSword.png")));
+        longSwordB.setFocusPainted(false);
+        longSwordB.setBackground(Color.black);
+        longSwordB.addActionListener(cHandler);
+        longSwordB.setActionCommand("Long Sword");
+        weaponPanel.add(longSwordB);
+
+        JButton magicWandB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/magicWand.png")));
+        magicWandB.setFocusPainted(false);
+        magicWandB.setBackground(Color.BLACK);
+        magicWandB.addActionListener(cHandler);
+        magicWandB.setActionCommand("Magic Wand");
+        weaponPanel.add(magicWandB);
+
+        JButton comingSoonB = new JButton(comingSoon.getName());
+        comingSoonB.setFocusPainted(false);
+        weaponPanel.add(comingSoonB);
+        
+
+
+        
+
+
+
+        JButton weaponButton = new JButton("Weapon");
+        weaponButton.setFocusPainted(false);
+        weaponButton.addActionListener(cHandler);
+        weaponButton.setActionCommand("Weapon");
+        itemPanel.add(weaponButton);
+
+        
+
+
+
+
+
+
+
+
+
+        JButton shieldButton = new JButton("Shield");
+        shieldButton.setFocusPainted(false);
+        itemPanel.add(shieldButton);
+
+        JButton buffButton = new JButton("Buff");
+        buffButton.setFocusPainted(false);
+        itemPanel.add(buffButton);
+
+        JButton clothButton = new JButton("Shirt");
+        clothButton.setFocusPainted(false);
+        itemPanel.add(clothButton);
+
+        // JButton button4 = new JButton("Test4");
+        // button1.setFocusPainted(false);
+        // itemPanel.add(button4);
         
         window.setVisible(true);
         return window;
+
+
     }
 
     public JPanel characterBar(){
@@ -110,6 +172,233 @@ public class characterPage{
 
         playerBar.add(taskButton, BorderLayout.WEST);
         return playerBar;
+    }
+
+
+public void defaultCharacter(){
+    picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("test2.png")));
+}
+    public class randomHandler implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            String action = event.getActionCommand();
+
+            switch (action) {
+                //what happens when the weapon button is pressed.
+                case "Weapon":
+                    if(!weaponPanelToggle){
+                        weaponPanelToggle = true;
+                        topPanel.remove(first);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        weaponPanelToggle = false;
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        topPanel.add(first);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+
+                    }
+                    break;
+                case "Short Sword":
+                    if(shortSword.getEquipped() != true){
+                        shortSword.setEquipped(true);
+                        longSword.setEquipped(false);
+                        magicWand.setEquipped(false);
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        shortSword.setEquipped(false);
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        defaultCharacter();
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    break;
+                case "Long Sword":
+                    if(longSword.getEquipped() != true){
+                        longSword.setEquipped(true);
+                        shortSword.setEquipped(false);
+                        magicWand.setEquipped(false);
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        longSword.setEquipped(false);
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        defaultCharacter();
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    break;
+                case "Magic Wand":
+                    if(magicWand.getEquipped() != true){
+                        magicWand.setEquipped(true);
+                        shortSword.setEquipped(false);
+                        longSword.setEquipped(false);
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        magicWand.setEquipped(false);
+                        topPanel.remove(weaponPanel);
+                        topPanel.remove(picLabel);
+                        topPanel.remove(test);
+                        defaultCharacter();
+                        topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    break;
+
+            default:
+                break;
+            }
+        }
+    }
+
+
+
+
+
+
+            
+    // public class MouseHandler implements MouseListener{
+    //     @Override
+    //     public void mouseClicked(MouseEvent e){
+
+    //     }
+    //     @Override
+    //     public void mousePressed(MouseEvent e){
+
+    //     }
+    //     @Override
+    //     public void mouseReleased(MouseEvent e){
+            
+    //     }
+    //     @Override
+    //     public void mouseExited(MouseEvent e){
+    //         messageText.setText(null);
+    //     }
+    //     @Override
+    //     public void mouseEntered(MouseEvent e) {
+    //         //determines which button your mouse hovers over
+    //         JButton button = (JButton)e.getSource();
+
+    //         if(button == button1){
+    //             messageText.setText("Cursor\n[price: " + cursorPrice + "]\nAutoclicks once every 10 seconds" );
+    //         }
+    //         else if(button == button2){
+    //             if(grandpaUnlocked ==false){
+    //                 messageText.setText("This item is currently locked");
+    //             }
+    //             else{
+    //                 messageText.setText("Grandpa\n[price: " + grandpaPrice + "]\nEach grandpa produces 1 cookie per second");
+    //             }
+    //         }
+    //         else if(button == button3){
+    //             messageText.setText("This item is currently locked");
+    //         }
+    //         else if(button == button4){
+    //             messageText.setText("This item is currently locked");
+    //         }
+    //     }
+    // }
+
+    class Item {
+        protected boolean Equiped;
+        protected boolean Bought;
+        protected String name;
+
+        public Item(){
+            Equiped = false;
+            Bought = false;
+            name = "No name";
+        }
+
+        public boolean getEquipped(){
+            return this.Equiped;
+        }
+
+        public boolean getBought(){
+            return this.Bought;
+        }
+
+        public String getName(){
+            return this.name;
+        }
+
+        public void setEquipped(boolean equipped){
+            this.Equiped = equipped;
+        }
+
+        public void setBought(boolean Bought){
+            this.Bought = Bought;
+        }
+    }
+
+    class Weapon extends Item {
+        protected int damage = 0;;
+
+        public Weapon(Boolean equipped, Boolean Bought, int damage, String name){
+            this.damage = damage;
+            this.Bought = Bought;
+            this.damage = damage;
+            this.name = name;
+            
+        }
+
+        public int getDamage(){
+            return this.damage;
+        }
+
+
+
+
+
     }
 
     

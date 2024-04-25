@@ -4,7 +4,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.formdev.flatlaf.FlatDarkLaf;
+//import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.ArrayList;
 
 public class TaskQuest extends JPanel {
@@ -145,7 +145,7 @@ public class TaskQuest extends JPanel {
     public static void main(String[] args) {
 
         //! Comment this out if your app crashes
-        FlatDarkLaf.setup();
+        //FlatDarkLaf.setup();
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("TaskQuest");
@@ -153,7 +153,7 @@ public class TaskQuest extends JPanel {
             frame.setContentPane(new TaskQuest());
             frame.setSize(400, 400);
             frame.setLocationRelativeTo(null);
-            frame.setMinimumSize(new Dimension(400, 400));
+            frame.setMinimumSize(new Dimension(600, 400));
             Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
             frame.setIconImage(icon);
             frame.setBackground(Color.black);
