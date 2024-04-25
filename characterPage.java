@@ -14,16 +14,18 @@ import javax.swing.border.EmptyBorder;
 public class characterPage{
     randomHandler cHandler = new randomHandler();
     JPanel window;
-    JPanel topPanel, first, test, weaponPanel;
+    JPanel topPanel, first, test, weaponPanel, shieldPanel;
     JLabel picLabel;
-    boolean weaponPanelToggle;
-    JButton shortSwordB;
-    Weapon longSword, shortSword, magicWand, comingSoon;
+    boolean weaponPanelToggle, shieldPanelToggle;
+    JButton shortSwordB, longSwordB, magicWandB, comingSoonB, woodShieldB, stoneShieldB, ironShieldB, comingSoonSB;
+    Weapon longSword, shortSword, magicWand, comingSoonW, comingSoon;
+    Shield woodShield, stoneShield, ironShield, comingSoonS;
     //JButton button1, button2, button3, button4, words, picture, words2;
 
     // Not really making use of the constructor?
     public characterPage(){
         weaponPanelToggle = false;
+        shieldPanelToggle = false;
     }
 
     //? What is this doing. Waiting for ok to delete
@@ -70,6 +72,7 @@ public class characterPage{
         window.add(itemPanel);
 
 
+        //BEGINNING OF WEAPON CODE
         weaponPanel = new JPanel();
         weaponPanel.setBackground(Color.black);
         weaponPanel.setLayout(new GridLayout(2,2));
@@ -77,15 +80,13 @@ public class characterPage{
         shortSword = new Weapon(false, false, 5, "Short Sword"); 
         longSword = new Weapon(false, false, 10, "Long Sword");
         magicWand = new Weapon(false, false, 15, "Magic Wand");
-        comingSoon = new Weapon(false, false, 0, "Coming Soon");
+        comingSoonW = new Weapon(false, false, 0, "Coming Soon");
 
-        //ImageIcon ssImage = new ImageIcon(getClass().getClassLoader().getResource("res/shortSword.png"));
         shortSwordB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/shortSword.png")));
         shortSwordB.setFocusPainted(false);
         shortSwordB.setBackground(Color.BLACK);
         shortSwordB.addActionListener(cHandler);
         shortSwordB.setActionCommand("Short Sword");
-        //shortSwordB.setIcon(ssImage);
         weaponPanel.add(shortSwordB);
         
         JButton longSwordB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/longSword.png")));
@@ -102,35 +103,65 @@ public class characterPage{
         magicWandB.setActionCommand("Magic Wand");
         weaponPanel.add(magicWandB);
 
-        JButton comingSoonB = new JButton(comingSoon.getName());
+        JButton comingSoonB = new JButton(comingSoonW.getName());
         comingSoonB.setFocusPainted(false);
         weaponPanel.add(comingSoonB);
         
-
-
-        
-
-
-
         JButton weaponButton = new JButton("Weapon");
         weaponButton.setFocusPainted(false);
         weaponButton.addActionListener(cHandler);
         weaponButton.setActionCommand("Weapon");
         itemPanel.add(weaponButton);
-
+        // END OF WEAPON CODE
         
 
+        //BEGINNING OF SHIELD CODE
+        shieldPanel = new JPanel();
+        shieldPanel.setBackground(Color.black);
+        shieldPanel.setLayout(new GridLayout(2,2));
 
 
+        woodShield = new Shield(false, false, 5, "Wood Shield"); 
+        stoneShield = new Shield(false, false, 10, "Stone Shield");
+        ironShield = new Shield(false, false, 15, "Iron Shield");
+        comingSoonS = new Shield(false, false, 0, "Coming Soon");
 
+        woodShieldB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/woodShield.png")));
+        woodShieldB.setFocusPainted(false);
+        woodShieldB.setBackground(Color.BLACK);
+        woodShieldB.addActionListener(cHandler);
+        woodShieldB.setActionCommand("Wood Shield");
+        shieldPanel.add(woodShieldB);
 
+        stoneShieldB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/stoneShield.png")));
+        stoneShieldB.setFocusPainted(false);
+        stoneShieldB.setBackground(Color.BLACK);
+        stoneShieldB.addActionListener(cHandler);
+        stoneShieldB.setActionCommand("Stone Shield");
+        shieldPanel.add(stoneShieldB);
 
+        ironShieldB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/ironShield.png")));
+        ironShieldB.setFocusPainted(false);
+        ironShieldB.setBackground(Color.BLACK);
+        ironShieldB.addActionListener(cHandler);
+        ironShieldB.setActionCommand("Iron Shield");
+        shieldPanel.add(ironShieldB);
+
+        comingSoonSB = new JButton(comingSoonW.getName());
+        ironShieldB.setFocusPainted(false);
+        shieldPanel.add(comingSoonSB);
 
 
 
         JButton shieldButton = new JButton("Shield");
         shieldButton.setFocusPainted(false);
+        shieldButton.addActionListener(cHandler);
+        shieldButton.setActionCommand("Shield");
         itemPanel.add(shieldButton);
+        // END OF SHIELD CODE
+
+
+
 
         JButton buffButton = new JButton("Buff");
         buffButton.setFocusPainted(false);
@@ -187,9 +218,8 @@ public void defaultCharacter(){
                 case "Weapon":
                     if(!weaponPanelToggle){
                         weaponPanelToggle = true;
-                        topPanel.remove(first);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
+                        shieldPanelToggle = false;
+                        topPanel.removeAll();
                         topPanel.add(weaponPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -198,9 +228,7 @@ public void defaultCharacter(){
                     }
                     else{
                         weaponPanelToggle = false;
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
+                        topPanel.removeAll();
                         topPanel.add(first);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -214,10 +242,11 @@ public void defaultCharacter(){
                         shortSword.setEquipped(true);
                         longSword.setEquipped(false);
                         magicWand.setEquipped(false);
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
-                        picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                        topPanel.removeAll();
+                        if(woodShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wSsSMan.png")));
+                        else if(stoneShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSsSMan.png")));
+                        else if(ironShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSsSMan.png")));
+                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
                         topPanel.add(weaponPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -226,10 +255,11 @@ public void defaultCharacter(){
                     }
                     else{
                         shortSword.setEquipped(false);
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
-                        defaultCharacter();
+                        topPanel.removeAll();
+                        if(woodShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wsMan.png")));
+                        else if(stoneShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/stsMan.png")));
+                        else if(ironShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/isMan.png")));
+                        else defaultCharacter();
                         topPanel.add(weaponPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -242,10 +272,11 @@ public void defaultCharacter(){
                         longSword.setEquipped(true);
                         shortSword.setEquipped(false);
                         magicWand.setEquipped(false);
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
-                        picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                        topPanel.removeAll();
+                        if(woodShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wSlSMan.png")));
+                        else if(stoneShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSlSMan.png")));
+                        else if(ironShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSlSMan.png")));
+                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
                         topPanel.add(weaponPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -254,10 +285,11 @@ public void defaultCharacter(){
                     }
                     else{
                         longSword.setEquipped(false);
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
-                        defaultCharacter();
+                        topPanel.removeAll();
+                        if(woodShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wsMan.png")));
+                        else if(stoneShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/stsMan.png")));
+                        else if(ironShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/isMan.png")));
+                        else defaultCharacter();
                         topPanel.add(weaponPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -270,10 +302,11 @@ public void defaultCharacter(){
                         magicWand.setEquipped(true);
                         shortSword.setEquipped(false);
                         longSword.setEquipped(false);
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
-                        picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                        topPanel.removeAll();
+                        if(woodShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wSmWMan.png")));
+                        else if(stoneShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSmWMan.png")));
+                        else if(ironShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSmWMan.png")));
+                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
                         topPanel.add(weaponPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
@@ -282,11 +315,124 @@ public void defaultCharacter(){
                     }
                     else{
                         magicWand.setEquipped(false);
-                        topPanel.remove(weaponPanel);
-                        topPanel.remove(picLabel);
-                        topPanel.remove(test);
-                        defaultCharacter();
+                        topPanel.removeAll();
+                        if(woodShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wsMan.png")));
+                        else if(stoneShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/stsMan.png")));
+                        else if(ironShield.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/isMan.png")));
+                        else defaultCharacter();
                         topPanel.add(weaponPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    break;
+                case "Shield":
+                    if(!shieldPanelToggle){
+                        shieldPanelToggle = true;
+                        weaponPanelToggle = false;
+                        topPanel.removeAll();
+                        topPanel.add(shieldPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        shieldPanelToggle = false;
+                        topPanel.removeAll();
+                        topPanel.add(first);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+
+                    }
+                    break;
+                case "Wood Shield":
+                    if(woodShield.getEquipped() != true){
+                        woodShield.setEquipped(true);
+                        stoneShield.setEquipped(false);
+                        ironShield.setEquipped(false);
+                        topPanel.removeAll();
+                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wSsSMan.png")));
+                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wSlSMan.png")));
+                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wSmWMan.png")));
+                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wsMan.png")));
+                        topPanel.add(shieldPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        woodShield.setEquipped(false);
+                        topPanel.removeAll();
+                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                        else defaultCharacter();
+                        topPanel.add(shieldPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    break;
+                case "Stone Shield":
+                    if(stoneShield.getEquipped() != true){
+                        stoneShield.setEquipped(true);
+                        ironShield.setEquipped(false);
+                        woodShield.setEquipped(false);
+                        topPanel.removeAll();
+                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSsSMan.png")));
+                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSlSMan.png")));
+                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSmWMan.png")));
+                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/stsMan.png")));
+                        topPanel.add(shieldPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        stoneShield.setEquipped(false);
+                        topPanel.removeAll();
+                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                        else defaultCharacter();
+                        topPanel.add(shieldPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    break;
+                case "Iron Shield":
+                    if(ironShield.getEquipped() != true){
+                        ironShield.setEquipped(true);
+                        stoneShield.setEquipped(false);
+                        woodShield.setEquipped(false);
+                        topPanel.removeAll();
+                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSsSMan.png")));
+                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSlSMan.png")));
+                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSmWMan.png")));
+                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/isMan.png")));
+                        topPanel.add(shieldPanel);
+                        topPanel.add(picLabel);
+                        topPanel.add(test);
+                        window.revalidate();
+                        window.repaint();
+                    }
+                    else{
+                        ironShield.setEquipped(false);
+                        topPanel.removeAll();
+                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                        else defaultCharacter();
+                        topPanel.add(shieldPanel);
                         topPanel.add(picLabel);
                         topPanel.add(test);
                         window.revalidate();
@@ -381,13 +527,14 @@ public void defaultCharacter(){
     }
 
     class Weapon extends Item {
-        protected int damage = 0;;
+        protected int damage;
 
         public Weapon(Boolean equipped, Boolean Bought, int damage, String name){
             this.damage = damage;
             this.Bought = Bought;
             this.damage = damage;
             this.name = name;
+            this.Equiped = equipped;
             
         }
 
@@ -401,5 +548,17 @@ public void defaultCharacter(){
 
     }
 
+    class Shield extends Item{
+        protected int extraHealth;
+        public Shield(Boolean equipped, Boolean Bought, int extraHealth, String name){
+            this.extraHealth = extraHealth;
+            this.Bought = Bought; 
+            this.Equiped = equipped;
+            this.name = name;
+        }
+        public int getExtraHealth(){
+            return this.extraHealth;
+        }
+    }    
     
 }
