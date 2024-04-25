@@ -151,6 +151,7 @@ public class characterPage{
         woodShieldB.setBackground(Color.BLACK);
         woodShieldB.addActionListener(cHandler);
         woodShieldB.setActionCommand("Wood Shield");
+        woodShieldB.addMouseListener(mHandler);
         shieldPanel.add(woodShieldB);
 
         stoneShieldB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/stoneShield.png")));
@@ -158,6 +159,7 @@ public class characterPage{
         stoneShieldB.setBackground(Color.BLACK);
         stoneShieldB.addActionListener(cHandler);
         stoneShieldB.setActionCommand("Stone Shield");
+        stoneShieldB.addMouseListener(mHandler);
         shieldPanel.add(stoneShieldB);
 
         ironShieldB = new JButton(new ImageIcon(getClass().getClassLoader().getResource("res/ironShield.png")));
@@ -165,10 +167,12 @@ public class characterPage{
         ironShieldB.setBackground(Color.BLACK);
         ironShieldB.addActionListener(cHandler);
         ironShieldB.setActionCommand("Iron Shield");
+        ironShieldB.addMouseListener(mHandler);
         shieldPanel.add(ironShieldB);
 
         comingSoonSB = new JButton(comingSoonW.getName());
         ironShieldB.setFocusPainted(false);
+        comingSoonB.addMouseListener(mHandler);
         shieldPanel.add(comingSoonSB);
 
 
@@ -191,9 +195,7 @@ public class characterPage{
         clothButton.setFocusPainted(false);
         itemPanel.add(clothButton);
 
-        // JButton button4 = new JButton("Test4");
-        // button1.setFocusPainted(false);
-        // itemPanel.add(button4);
+        
         
         window.setVisible(true);
         return window;
@@ -397,6 +399,7 @@ public void defaultCharacter(){
                         else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/wsMan.png")));
                         topPanel.add(shieldPanel);
                         topPanel.add(picLabel);
+                        test.setText("Wood Shield (Owned)\nEquipped: YES\nExtra Health: " + woodShield.getExtraHealth());
                         topPanel.add(test);
                         window.revalidate();
                         window.repaint();
@@ -410,70 +413,81 @@ public void defaultCharacter(){
                         else defaultCharacter();
                         topPanel.add(shieldPanel);
                         topPanel.add(picLabel);
+                        test.setText("Wood Shield (Owned)\nEquipped: NO\nExtra Health: " + woodShield.getExtraHealth());
                         topPanel.add(test);
                         window.revalidate();
                         window.repaint();
                     }
                     break;
                 case "Stone Shield":
-                    if(stoneShield.getEquipped() != true){
-                        stoneShield.setEquipped(true);
-                        ironShield.setEquipped(false);
-                        woodShield.setEquipped(false);
-                        topPanel.removeAll();
-                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSsSMan.png")));
-                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSlSMan.png")));
-                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSmWMan.png")));
-                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/stsMan.png")));
-                        topPanel.add(shieldPanel);
-                        topPanel.add(picLabel);
-                        topPanel.add(test);
-                        window.revalidate();
-                        window.repaint();
+                    if(stoneShield.getBought()){
+                        if(stoneShield.getEquipped() != true){
+                            stoneShield.setEquipped(true);
+                            ironShield.setEquipped(false);
+                            woodShield.setEquipped(false);
+                            topPanel.removeAll();
+                            if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSsSMan.png")));
+                            else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSlSMan.png")));
+                            else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/sSmWMan.png")));
+                            else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/stsMan.png")));
+                            topPanel.add(shieldPanel);
+                            topPanel.add(picLabel);
+                            test.setText("Stone Shield (Owned)\nEquipped: YES\nExtra Health: " + stoneShield.getExtraHealth());
+                            topPanel.add(test);
+                            window.revalidate();
+                            window.repaint();
+                        }
+                        else{
+                            stoneShield.setEquipped(false);
+                            topPanel.removeAll();
+                            if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                            else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                            else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                            else defaultCharacter();
+                            topPanel.add(shieldPanel);
+                            topPanel.add(picLabel);
+                            test.setText("Stone Shield (Owned)\nEquipped: NO\nExtra Health: " + stoneShield.getExtraHealth());
+                            topPanel.add(test);
+                            window.revalidate();
+                            window.repaint();
+                        }
                     }
-                    else{
-                        stoneShield.setEquipped(false);
-                        topPanel.removeAll();
-                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
-                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
-                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
-                        else defaultCharacter();
-                        topPanel.add(shieldPanel);
-                        topPanel.add(picLabel);
-                        topPanel.add(test);
-                        window.revalidate();
-                        window.repaint();
-                    }
+                    else test.setText("Stone Shield (not Owned)\nYou need more xp to buy a Stone Shield!");
                     break;
                 case "Iron Shield":
-                    if(ironShield.getEquipped() != true){
-                        ironShield.setEquipped(true);
-                        stoneShield.setEquipped(false);
-                        woodShield.setEquipped(false);
-                        topPanel.removeAll();
-                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSsSMan.png")));
-                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSlSMan.png")));
-                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSmWMan.png")));
-                        else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/isMan.png")));
-                        topPanel.add(shieldPanel);
-                        topPanel.add(picLabel);
-                        topPanel.add(test);
-                        window.revalidate();
-                        window.repaint();
+                    if(ironShield.getBought()){
+                        if(ironShield.getEquipped() != true){
+                            ironShield.setEquipped(true);
+                            stoneShield.setEquipped(false);
+                            woodShield.setEquipped(false);
+                            topPanel.removeAll();
+                            if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSsSMan.png")));
+                            else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSlSMan.png")));
+                            else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/iSmWMan.png")));
+                            else picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/isMan.png")));
+                            topPanel.add(shieldPanel);
+                            topPanel.add(picLabel);
+                            test.setText("Iron Shield (Owned)\nEquipped: YES\nExtra Health: " + ironShield.getExtraHealth());
+                            topPanel.add(test);
+                            window.revalidate();
+                            window.repaint();
+                        }
+                        else{
+                            ironShield.setEquipped(false);
+                            topPanel.removeAll();
+                            if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
+                            else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
+                            else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
+                            else defaultCharacter();
+                            topPanel.add(shieldPanel);
+                            topPanel.add(picLabel);
+                            test.setText("Iron Shield (Owned)\nEquipped: NO\nExtra Health: " + ironShield.getExtraHealth());
+                            topPanel.add(test);
+                            window.revalidate();
+                            window.repaint();
+                        }
                     }
-                    else{
-                        ironShield.setEquipped(false);
-                        topPanel.removeAll();
-                        if(shortSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/ssMan.png")));
-                        else if(longSword.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/lsMan.png")));
-                        else if(magicWand.getEquipped()) picLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("res/mwMan.png")));
-                        else defaultCharacter();
-                        topPanel.add(shieldPanel);
-                        topPanel.add(picLabel);
-                        topPanel.add(test);
-                        window.revalidate();
-                        window.repaint();
-                    }
+                    else test.setText("Iron Shield (not Owned)\nYou need more xp to buy a Iron Shield!");
                     break;
 
             default:
@@ -533,6 +547,32 @@ public void defaultCharacter(){
                 }
             }
             else if(button == comingSoonB){
+                test.setText("More Items coming soon!");
+            }
+            else if(button == woodShieldB){
+                if(woodShield.getEquipped()) test.setText("Wood Shield (Owned)\nEquipped: YES\nExtra Health: " + woodShield.getExtraHealth());
+                else test.setText("Wood Shield (Owned)\nEquipped: NO\nExtra Health: " + woodShield.getExtraHealth());
+            }
+
+            else if(button == stoneShieldB){
+                if(stoneShield.getBought() == false){
+                    test.setText("Stone Shield (Locked)\nThis item is currently locked!\nCost: " + stoneShield.getCost() + "\nExtra Health: " + stoneShield.getExtraHealth());
+                }
+                else{
+                    if(stoneShield.getEquipped()) test.setText("Stone Shield (Owned)\nEquipped: YES\nExtra Health: " + stoneShield.getExtraHealth());
+                    else test.setText("Stone Shield (Owned)\nEquipped: NO\nExtra Health: " + stoneShield.getExtraHealth());
+                }
+            }
+            else if(button == ironShieldB){
+                if(ironShield.getBought() == false){
+                    test.setText("Iron Shield (Locked)\nThis item is currently locked!\nCost: " + ironShield.getCost() + "\nExtra Health: " + ironShield.getExtraHealth());
+                }
+                else{
+                    if(ironShield.getEquipped()) test.setText("Iron Shield (Owned)\nEquipped: YES\nExtra Health: " + ironShield.getExtraHealth());
+                    else test.setText("Iron Shield (Owned)\nEquipped: NO\nExtra Health: " + ironShield.getExtraHealth());
+                }
+            }
+            else if(button == comingSoonSB){
                 test.setText("More Items coming soon!");
             }
         }
