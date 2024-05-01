@@ -27,7 +27,6 @@ public class Taskxp extends JPanel {
 
       window.setSize(800, 600);
       window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      // window.getContentPane().setBackground(Color.black);
       window.setLayout(null);
       con = window.getContentPane();
       progress = new JLabel();
@@ -37,7 +36,6 @@ public class Taskxp extends JPanel {
 
       xpBarPanel = new JPanel();
       xpBarPanel.setBounds(250, 250, 300, 30);
-      // xpBarPanel.setBackground(Color.black);
       con.add(xpBarPanel);
 
       xpBar = new JProgressBar(0, 10);
@@ -47,7 +45,6 @@ public class Taskxp extends JPanel {
 
       buttonPanel = new JPanel();
       buttonPanel.setBounds(250, 300, 300, 40);
-      // buttonPanel.setBackground(Color.black);
       con.add(buttonPanel);
       xp = 0;
       level = 0;
