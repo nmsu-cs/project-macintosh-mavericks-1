@@ -39,3 +39,8 @@ Make sure all files in same directory.
 
 In terminal, or run button in VSCode or your favorite IDE. 
 
+#### Alternative running
+
+In the terminal, you may enter the command:
+
+ ```java -jar --enable-preview project-macintosh-mavericks-1.jar```
