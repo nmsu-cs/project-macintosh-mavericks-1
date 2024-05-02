@@ -15,8 +15,29 @@ A retro inspired task tracking app that allows users to gain XP for each task th
 
 ### How to run?
 
+1. Within the build, run TaskQuest.java with VSCode with the run program.
+2. Each file runs within each other and all compiles within the main function in ```TaskQuest.java```.
+3. JPanel was executed with TaskQuest to get the program to run.
+4. Make sure files are in same directory.
+5. git status to show the working directory you are currently working in.
+
+Within TaskQuest code there are two areas that if you computer does not run the program to comment out the section of the code. Both sections are withing the main function of ```TaskQuest.java```.
+First, is the FlatDarkLaf.setup().
+Second it the try{} section at the very bottom. 
+
+
+ 
 #### Enter this command to compile the program
-```command goes here``` 
+```javac TaskQuest.java```
+
+java TaskQuest
+
+Make sure all files in same directory.
+
 
 #### Enter this command to run the program
-```command goes here```
+
+```java TaskQuest```
+
+In terminal, or run button in VSCode or your favorite IDE. 
+
