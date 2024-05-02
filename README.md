@@ -30,8 +30,6 @@ Second it the try{} section at the very bottom.
 #### Enter this command to compile the program
 ```javac TaskQuest.java```
 
-java TaskQuest
-
 Make sure all files in same directory.
 
 
